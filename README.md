@@ -38,10 +38,6 @@ bun install
 
 Copy environment variables:
 
-```bash
-cp .env.example .env
-```
-
 | Variable | Purpose |
 |----------|---------|
 | `NOTES_STORE_ID` | Vercel Blob store id (reference / dashboard) |
