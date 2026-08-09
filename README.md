@@ -1,87 +1,91 @@
-# Welcome to React Router!
+# UCSC Notes
 
-A modern, production-ready template for building full-stack React applications using React Router.
+An independent course-compilation archive for Computer Science notes, organised by **year and semester**. Subject overviews and topics are curated in the app; PDF URLs are loaded live from Vercel Blob.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+This project is **not affiliated with** the University of Colombo School of Computing (UCSC).
 
-## Features
+## Extending the archive
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+Add a new semester or year in [`app/data/catalog.ts`](app/data/catalog.ts) by appending a `Compilation` entry:
 
-## Getting Started
+```ts
+{
+  id: "y1-sem02",
+  year: 1,
+  semester: 2,
+  label: "Year 1 · Semester 02",
+  shortLabel: "Y1 Sem 02",
+  blobPrefix: "Compilations_Sem02/",
+  subjects: [/* ... */],
+}
+```
 
-### Installation
+Upload matching PDFs under that Blob prefix. The home page lists every compilation and merges files by basename.
 
-Install the dependencies:
+## Stack
+
+- React Router 8 (SSR) + Vite
+- Tailwind CSS v4
+- `@vercel/blob` for listing PDFs
+- Motion for UI animation
+- Dark mode by default (toggle in nav)
+
+## Setup
 
 ```bash
-npm install
+bun install
 ```
 
-### Development
-
-Start the development server with HMR:
+Copy environment variables:
 
 ```bash
-npm run dev
+cp .env.example .env
 ```
 
-Your application will be available at `http://localhost:5173`.
+| Variable | Purpose |
+|----------|---------|
+| `NOTES_STORE_ID` | Vercel Blob store id (reference / dashboard) |
+| `NOTES_READ_WRITE_TOKEN` | Blob read-write token used by the server loader to `list()` |
 
-## Building for Production
+Example Blob layout:
 
-Create a production build:
+```text
+Compilations_Sem01/
+  Application_Lab.pdf
+  Data_Structures_and_Program_Design_in_C.pdf
+  Computer_Systems.pdf
+  ...
+Compilations_Sem02/   # add when ready
+  ...
+```
+
+The local `pdfs/` folder is **reference only** for topic extraction. The site does not serve those files directly.
+
+## Development
 
 ```bash
-npm run build
+bun run dev
 ```
 
-## Deployment
+App: [http://localhost:5173](http://localhost:5173)
 
-### Docker Deployment
-
-To build and run using Docker:
+## Build
 
 ```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
+bun run build
+bun run start
 ```
 
-The containerized application can be deployed to any platform that supports Docker, including:
+Typecheck:
 
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
+```bash
+bun run typecheck
 ```
 
-## Styling
+## Deploy (Vercel)
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+1. Set `NOTES_READ_WRITE_TOKEN` (and optionally `NOTES_STORE_ID`) in the project environment.
+2. Keep SSR enabled for the React Router build.
+3. Upload PDFs under each compilation’s Blob prefix.
 
----
-
-Built with ❤️ using React Router.
+Each “Open PDF” control links straight to the public Blob URL in a new tab.
