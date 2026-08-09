@@ -28,7 +28,7 @@ Upload matching PDFs under that Blob prefix. The home page lists every compilati
 - Tailwind CSS v4
 - `@vercel/blob` for listing PDFs
 - Motion for UI animation
-- Dark mode by default (toggle in nav)
+- Dark mode by default (toggle in footer)
 
 ## Setup
 

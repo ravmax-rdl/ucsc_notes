@@ -2,7 +2,6 @@ import type { Route } from "./+types/home";
 import { COMPILATIONS } from "../data/catalog";
 import { listPdfsByPrefix } from "../lib/blob.server";
 import { mergeCompilationWithBlobs } from "../lib/merge-subjects";
-import { SiteNav } from "../components/SiteNav";
 import { Hero } from "../components/Hero";
 import { TopicNetworkViz } from "../components/TopicNetworkViz";
 import { SubjectArchive } from "../components/SubjectArchive";
@@ -36,7 +35,6 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 
   return (
     <>
-      <SiteNav />
       <main>
         <Hero />
         {primary ? (
