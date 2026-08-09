@@ -1,0 +1,203 @@
+export type SubjectIllustration =
+  | "lab"
+  | "c-structures"
+  | "systems"
+  | "discrete"
+  | "algebra"
+  | "probability"
+  | "algorithms"
+  | "engineering";
+
+export type Subject = {
+  slug: string;
+  title: string;
+  code: string | null;
+  file: string;
+  overview: string;
+  topics: string[];
+  illustration: SubjectIllustration;
+};
+
+export type SubjectWithPdf = Subject & {
+  url: string | null;
+  size: number | null;
+};
+
+export type Compilation = {
+  id: string;
+  year: number;
+  semester: number;
+  label: string;
+  shortLabel: string;
+  blobPrefix: string;
+  subjects: Subject[];
+};
+
+export type CompilationWithPdfs = Omit<Compilation, "subjects"> & {
+  subjects: SubjectWithPdf[];
+};
+
+/** Add new years/semesters here. Each compilation maps to a Blob folder prefix. */
+export const COMPILATIONS: Compilation[] = [
+  {
+    id: "y1-sem01",
+    year: 1,
+    semester: 1,
+    label: "Year 1 · Semester 01",
+    shortLabel: "Y1 Sem 01",
+    blobPrefix: "Compilations_Sem01/",
+    subjects: [
+      {
+        slug: "application-lab",
+        title: "Application Laboratory",
+        code: "ENH 1301",
+        file: "Application_Lab.pdf",
+        overview:
+          "A single reference for the lab syllabus: LibreOffice, Linux fundamentals, Bash, and the day-to-day tools used in practical work.",
+        topics: [
+          "LibreOffice",
+          "Linux FS",
+          "Permissions",
+          "Vim",
+          "Bash",
+          "Git",
+          "LaTeX",
+          "SSH",
+        ],
+        illustration: "lab",
+      },
+      {
+        slug: "data-structures-and-c",
+        title: "Data Structures and Program Design in C",
+        code: "SCS 1301",
+        file: "Data_Structures_and_Program_Design_in_C.pdf",
+        overview:
+          "Placeholder for the C and data structures compilation. Topics and PDF will appear here once the notes are uploaded.",
+        topics: [
+          "C fundamentals",
+          "Pointers",
+          "Structs",
+          "Arrays and lists",
+          "Stacks",
+          "Queues",
+          "Trees",
+          "Graphs",
+          "Hashing",
+          "Sorting",
+        ],
+        illustration: "c-structures",
+      },
+      {
+        slug: "computer-systems",
+        title: "Computer Systems",
+        code: "SCS 1305",
+        file: "Computer_Systems.pdf",
+        overview:
+          "From bits and number systems through combinational and sequential logic to computer organisation and memory systems.",
+        topics: [
+          "Data representation",
+          "Boolean algebra",
+          "Combinational logic",
+          "Sequential logic",
+          "Architecture",
+          "Memory",
+        ],
+        illustration: "systems",
+      },
+      {
+        slug: "discrete-mathematics",
+        title: "Discrete Mathematics",
+        code: "SCS 1302",
+        file: "Discrete_Mathematics.pdf",
+        overview:
+          "Propositional and predicate logic, proofs, set theory, functions, relations, and elementary number theory with worked solutions.",
+        topics: [
+          "Prop. logic",
+          "Predicate logic",
+          "Proofs",
+          "Sets",
+          "Functions",
+          "Relations",
+          "Number theory",
+        ],
+        illustration: "discrete",
+      },
+      {
+        slug: "linear-algebra",
+        title: "Linear Algebra",
+        code: "SCS 1306",
+        file: "Linear_Algebra.pdf",
+        overview:
+          "The course built around Ax = b: elimination, inverses, determinants, vector spaces, orthogonality, and eigenvalues.",
+        topics: [
+          "Elimination",
+          "Inverses",
+          "Determinants",
+          "Vector spaces",
+          "Orthogonality",
+          "Eigenvalues",
+        ],
+        illustration: "algebra",
+      },
+      {
+        slug: "probability-statistics",
+        title: "Probability and Statistics",
+        code: "SCS 1307",
+        file: "Probability_Statistics.pdf",
+        overview:
+          "Descriptive statistics, axiomatic probability, conditioning and Bayes, random variables, and the classic discrete and continuous distributions.",
+        topics: [
+          "Descriptive stats",
+          "Probability",
+          "Bayes",
+          "Random variables",
+          "Binomial",
+          "Poisson",
+          "Normal",
+        ],
+        illustration: "probability",
+      },
+      {
+        slug: "problem-solving",
+        title: "Problem Solving Strategies",
+        code: "SCS 1304",
+        file: "Problem_Solving.pdf",
+        overview:
+          "Computational thinking, recursion, asymptotic analysis, and the major algorithm design paradigms through to P and NP.",
+        topics: [
+          "Computational thinking",
+          "Recursion",
+          "Asymptotics",
+          "Brute force",
+          "Divide-and-conquer",
+          "DP",
+          "Greedy",
+          "Backtracking",
+          "P/NP",
+        ],
+        illustration: "algorithms",
+      },
+      {
+        slug: "software-engineering",
+        title: "Introduction to Software Engineering",
+        code: "SCS 1303",
+        file: "Software_engineering.pdf",
+        overview:
+          "Process models, requirements, design principles, UML, and verification practices for building maintainable software.",
+        topics: [
+          "Process models",
+          "Requirements",
+          "Design principles",
+          "UML",
+          "V&V",
+          "Agile",
+        ],
+        illustration: "engineering",
+      },
+    ],
+  },
+];
+
+export function allSubjects(compilations: Compilation[] = COMPILATIONS): Subject[] {
+  return compilations.flatMap((c) => c.subjects);
+}

@@ -1,15 +1,64 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Code", monospace;
+
+  --color-cf-primary: #ff5e1f;
+  --color-cf-primary-hover: #ff4800;
+  --color-cf-on-primary: #ffffff;
+  --color-cf-bg: #111111;
+  --color-cf-surface: #1a1a1a;
+  --color-cf-border: #2a2a2a;
+  --color-cf-text: #f2f2f0;
+  --color-cf-text-muted: #a3a3a3;
+  --color-cf-accent: #ff7038;
+
+  --radius-sm: 1px;
+  --radius-md: 2px;
+  --radius-lg: 3px;
+  --radius-xl: 4px;
+
+  --ease-cf: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+html[data-theme="light"] {
+  --color-cf-bg: #ffffff;
+  --color-cf-surface: #fdfdfc;
+  --color-cf-border: #f0f0f0;
+  --color-cf-text: #262626;
+  --color-cf-text-muted: #5c5c5c;
+}
+
+html[data-theme="dark"] {
+  --color-cf-bg: #111111;
+  --color-cf-surface: #1a1a1a;
+  --color-cf-border: #2a2a2a;
+  --color-cf-text: #f2f2f0;
+  --color-cf-text-muted: #a3a3a3;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-cf-bg text-cf-text font-sans antialiased;
+}
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+:focus-visible {
+  outline: 2px solid var(--color-cf-primary);
+  outline-offset: 2px;
 }
