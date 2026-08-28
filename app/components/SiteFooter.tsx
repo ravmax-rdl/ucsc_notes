@@ -53,9 +53,10 @@ export function SiteFooter() {
             UCSC Notes
           </p>
           <p className="max-w-lg text-[13px] leading-relaxed text-cf-text-muted">
-            Compiled from lecture notes, exercises, tutorials and lab sheets with
-            Claude Opus 5 on high/xhigh effort. Organised by year and semester;
-            files are served from Vercel Blob storage.
+            Compiled from lecture notes, exercises, tutorials and lab sheets,
+            with sample papers alongside each subject, using Claude Opus 5 on
+            high/xhigh effort. Organised by year and semester; files are
+            served from Vercel Blob storage.
           </p>
         </div>
         <p className="max-w-3xl text-[12px] leading-relaxed text-cf-text-muted">

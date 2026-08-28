@@ -18,9 +18,17 @@ export type Subject = {
   illustration: SubjectIllustration;
 };
 
+export type PaperWithUrl = {
+  index: 1 | 2;
+  file: string;
+  url: string | null;
+  size: number | null;
+};
+
 export type SubjectWithPdf = Subject & {
   url: string | null;
   size: number | null;
+  papers: PaperWithUrl[];
 };
 
 export type Compilation = {
@@ -29,13 +37,25 @@ export type Compilation = {
   semester: number;
   label: string;
   shortLabel: string;
-  blobPrefix: string;
+  notesBlobPrefix: string;
+  papersBlobPrefix: string;
   subjects: Subject[];
 };
 
 export type CompilationWithPdfs = Omit<Compilation, "subjects"> & {
   subjects: SubjectWithPdf[];
 };
+
+/**
+ * Sample papers reuse the note's basename with a `_01` / `_02` suffix, e.g.
+ * `Computer_Systems.pdf` -> `Computer_Systems_01.pdf`, `Computer_Systems_02.pdf`.
+ */
+export function paperFilenames(subject: Pick<Subject, "file">): [string, string] {
+  const dot = subject.file.lastIndexOf(".");
+  const stem = dot === -1 ? subject.file : subject.file.slice(0, dot);
+  const ext = dot === -1 ? "" : subject.file.slice(dot);
+  return [`${stem}_01${ext}`, `${stem}_02${ext}`];
+}
 
 /** Add new years/semesters here. Each compilation maps to a Blob folder prefix. */
 export const COMPILATIONS: Compilation[] = [
@@ -45,7 +65,8 @@ export const COMPILATIONS: Compilation[] = [
     semester: 1,
     label: "Year 1 · Semester 01",
     shortLabel: "Y1 Sem 01",
-    blobPrefix: "Compilations_Sem01/",
+    notesBlobPrefix: "Compilations_Y01_S01/",
+    papersBlobPrefix: "Papers_Y01_S01/",
     subjects: [
       {
         slug: "application-lab",

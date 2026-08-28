@@ -83,7 +83,9 @@ export function TopicNetworkViz({
       const h = rect.height;
       const cx = w * 0.5;
       const cy = h * 0.5;
-      const radius = Math.min(w, h) * 0.32;
+      const radius = Math.min(w, h) * 0.24;
+      const paperRadius = Math.min(w, h) * 0.38;
+      const paperSpread = Math.min(0.16, (Math.PI / nodes.length) * 0.3);
       const textColor = cssVar("--color-cf-text", "#f2f2f0");
       const muted = cssVar("--color-cf-text-muted", "#a3a3a3");
 
@@ -139,6 +141,30 @@ export function TopicNetworkViz({
         ctx.font = "500 12px 'Space Grotesk', sans-serif";
         ctx.textAlign = "center";
         ctx.fillText(node.label, x, y + 32);
+
+        const papers = subjects[i]?.papers ?? [];
+        const outward = Math.atan2(node.y, node.x);
+
+        papers.slice(0, 2).forEach((paper, pi) => {
+          const angle = outward + (pi === 0 ? -paperSpread : paperSpread);
+          const sx = cx + Math.cos(angle) * paperRadius;
+          const sy = cy + Math.sin(angle) * paperRadius;
+          const paperAvailable = paper.url != null;
+
+          ctx.beginPath();
+          ctx.strokeStyle = paperAvailable
+            ? "rgba(255, 94, 31, 0.22)"
+            : "rgba(163, 163, 163, 0.2)";
+          ctx.lineWidth = 1;
+          ctx.moveTo(x, y);
+          ctx.lineTo(sx, sy);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.fillStyle = paperAvailable ? "rgba(255, 94, 31, 0.85)" : muted;
+          ctx.arc(sx, sy, 6, 0, Math.PI * 4);
+          ctx.fill();
+        });
       });
 
       if (!reduce) {
@@ -166,14 +192,15 @@ export function TopicNetworkViz({
         </h2>
         <p className="mt-4 max-w-[52ch] text-[15px] leading-relaxed text-cf-text-muted">
           Modules in the selected compilation, linked by shared ideas across
-          math, systems, and software practice.
+          math, systems, and software practice. Each subject carries two
+          satellite nodes for its sample papers.
         </p>
         <div className="mt-10 h-[360px] w-full md:h-[440px]">
           <canvas
             ref={canvasRef}
             className="h-full w-full"
             role="img"
-            aria-label={`Animated network of subjects in ${label}`}
+            aria-label={`Animated network of subjects in ${label}, each with two sample-paper nodes`}
           />
         </div>
       </div>
