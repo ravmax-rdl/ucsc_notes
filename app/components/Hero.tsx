@@ -44,9 +44,10 @@ export function Hero() {
             Course compilations archive
           </h1>
           <p className="mt-5 max-w-[48ch] text-base leading-relaxed text-cf-text-muted md:text-[17px]">
-            Compiled from lecture notes, exercises, tutorials and lab sheets with
-            Claude Opus 5 on high/xhigh effort. Organised by year and semester in
-            a shared archive.
+            Compiled from lecture notes, exercises, tutorials and lab sheets,
+            with sample papers alongside each subject, using Claude Opus 5 on
+            high/xhigh effort. Organised by year and semester in a shared
+            archive.
           </p>
           <div className="mt-8">
             <a

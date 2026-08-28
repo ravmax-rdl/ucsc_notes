@@ -13,7 +13,7 @@ export function meta({}: Route.MetaArgs) {
     {
       name: "description",
       content:
-        "Course compilations from lecture notes, exercises, tutorials and lab sheets with Claude Opus 5 on high/xhigh effort. Organised by year and semester.",
+        "Course compilations of notes and sample papers from lectures, exercises, tutorials and lab sheets with Claude Opus 5 on high/xhigh effort. Organised by year and semester.",
     },
   ];
 }
@@ -21,8 +21,11 @@ export function meta({}: Route.MetaArgs) {
 export async function loader({}: Route.LoaderArgs) {
   const compilations = await Promise.all(
     COMPILATIONS.map(async (compilation) => {
-      const blobs = await listPdfsByPrefix(compilation.blobPrefix);
-      return mergeCompilationWithBlobs(compilation, blobs);
+      const [notesBlobs, papersBlobs] = await Promise.all([
+        listPdfsByPrefix(compilation.notesBlobPrefix),
+        listPdfsByPrefix(compilation.papersBlobPrefix),
+      ]);
+      return mergeCompilationWithBlobs(compilation, notesBlobs, papersBlobs);
     }),
   );
 

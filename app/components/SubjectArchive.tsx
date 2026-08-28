@@ -36,7 +36,8 @@ export function SubjectArchive({
           </h2>
           <p className="mt-4 max-w-[56ch] text-[15px] leading-relaxed text-cf-text-muted">
             Compiled from lecture notes, exercises, tutorials and lab sheets with
-            Claude Opus 5 on high/xhigh effort. Browse by year and semester; more
+            Claude Opus 5 on high/xhigh effort. Each subject also carries two
+            sample papers where available. Browse by year and semester; more
             compilations can be added as storage folders grow.
           </p>
 
@@ -124,7 +125,7 @@ export function SubjectArchive({
                   </ul>
                 </div>
 
-                <div className="md:justify-self-end">
+                <div className="flex flex-col gap-3 md:items-end md:justify-self-end">
                   {available && subject.url ? (
                     <a
                       href={subject.url}
@@ -133,7 +134,7 @@ export function SubjectArchive({
                       className="inline-flex min-h-11 items-center gap-2 rounded-sm bg-cf-primary px-4 py-2.5 text-[13px] font-medium text-cf-on-primary transition-colors duration-200 hover:bg-cf-primary-hover active:scale-[0.98]"
                     >
                       <FilePdf size={18} weight="bold" aria-hidden />
-                      Open PDF
+                      Open Note
                       <ArrowUpRight size={16} weight="bold" aria-hidden />
                     </a>
                   ) : (
@@ -141,6 +142,30 @@ export function SubjectArchive({
                       <FilePdf size={18} aria-hidden />
                       Coming soon
                     </span>
+                  )}
+
+                  {subject.papers.map((paper) =>
+                    paper.url ? (
+                      <a
+                        key={paper.index}
+                        href={paper.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex min-h-11 items-center gap-2 rounded-sm border border-cf-border bg-cf-surface px-[18px] py-2.5 font-mono text-[13px] text-cf-text transition-colors duration-200 hover:border-cf-primary hover:text-cf-primary"
+                      >
+                        <FilePdf size={15} aria-hidden />
+                        Paper {String(paper.index).padStart(2, "0")}
+                        <ArrowUpRight size={16} weight="bold" aria-hidden />
+                      </a>
+                    ) : (
+                      <span
+                        key={paper.index}
+                        className="inline-flex min-h-9 items-center gap-2 rounded-sm border border-cf-border px-3.5 py-2 font-mono text-[12px] text-cf-text-muted"
+                      >
+                        <FilePdf size={15} aria-hidden />
+                        Paper {String(paper.index).padStart(2, "0")} soon
+                      </span>
+                    ),
                   )}
                 </div>
               </motion.li>
