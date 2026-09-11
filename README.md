@@ -29,7 +29,6 @@ Upload matching PDFs under those two Blob prefixes. The home page lists every co
 - Tailwind CSS v4
 - `@vercel/blob` for listing PDFs
 - Motion for UI animation
-- Dark mode by default (toggle in footer)
 
 ## Setup
 
@@ -37,11 +36,11 @@ Upload matching PDFs under those two Blob prefixes. The home page lists every co
 bun install
 ```
 
-Copy environment variables:
+Environment variables:
 
-| Variable | Purpose |
-|----------|---------|
-| `NOTES_STORE_ID` | Vercel Blob store id (reference / dashboard) |
+| Variable                 | Purpose                                                     |
+| ------------------------ | ----------------------------------------------------------- |
+| `NOTES_STORE_ID`         | Vercel Blob store id (reference / dashboard)                |
 | `NOTES_READ_WRITE_TOKEN` | Blob read-write token used by the server loader to `list()` |
 
 Example Blob layout:
@@ -63,8 +62,6 @@ Compilations_Y01_S02/   # add when ready
 Papers_Y01_S02/         # add when ready
   ...
 ```
-
-The local `pdfs/` folder is **reference only** for topic extraction. The site does not serve those files directly.
 
 ## Development
 
